@@ -13,9 +13,12 @@ class CreateStudentRegisterationTable extends Migration
      */
     public function up()
     {
+        //This table will be created dynamically
+        //Naming schema will be student_registeration_(Speciality_id)_(year))
         Schema::create('student_registeration', function (Blueprint $table) {
-            $table->integerIncrements('registeration_id');
-            
+            $table->bigInteger('university_id');
+            $table->integer('semester_id');
+            $table->float('fee');
             $table->timestamps();
         });
     }

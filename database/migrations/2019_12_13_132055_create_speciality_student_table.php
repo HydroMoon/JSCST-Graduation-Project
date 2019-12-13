@@ -16,12 +16,12 @@ class CreateSpecialityStudentTable extends Migration
         //Speciality name will be for every year
         //Also will be created according to batch year
         //This table will be dynamically created at some point
-        //mohand (table name  will speciality_student_(Speciality)_(year))
+        //mohand (table name  will speciality_student_(Speciality_id)_(year))
         Schema::create('speciality_student', function (Blueprint $table) {
             $table->integerIncrements('id');
-            $table->integer('university_id');
-            $table->string('semster_name')->nullable();
-            $table->boolean('transfer_active')->default(0);
+            $table->bigInteger('university_id');
+            $table->string('semster_name', 20)->nullable();
+            $table->boolean('transfer_active')->default(0);//According to this colmun we transfer the student to degree table
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ class CreateDegreeInfoTable extends Migration
         Schema::create('degree_info', function (Blueprint $table) {
             $table->integerIncrements('degree_id');
             $table->integer('semester_id');//Get Subject Info(Name etc..)
-            $table->integer('speciality_id');//Get student info(Name etc...)
+            $table->integer('speciality_id');//Get student info(speciality_student_(Speciality_id)_(year))
             $table->integer('degree_year');//Year for the current degree/help to creat/retrive data from dynamic table
             $table->timestamps();
         });
