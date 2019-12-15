@@ -17,9 +17,25 @@ class CreateStudentRegisterationTable extends Migration
         //Naming schema will be student_registeration_(Speciality_id)_(year))
         Schema::create('student_registeration', function (Blueprint $table) {
             $table->bigInteger('university_id');
-            $table->integer('semester_id');
-            $table->float('fee');
+            $table->tinyInteger('semester_id');
+            $table->primary(['university_id', 'semester_id']);
+            $table->float('fee')->default(0.00);
             $table->timestamps();
+        });
+
+        //FK
+        Schema::table('student_registeration', function (Blueprint $table) {
+            $table->foreign('university_id')
+            ->references('university_id')
+            ->on('student')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
+            $table->foreign('semester_id')
+            ->references('semester_id')
+            ->on('semester')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 

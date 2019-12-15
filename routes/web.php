@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/result', function () {
-    return view('main.result');
-})->name('result');
+Route::get('/result', 'ResultEnquiryController@getIndex')->name('result');
 
 Route::get('/final', function () {
     return view('main.final');
@@ -27,9 +25,12 @@ Route::get('/entry', function () {
     return view('main.entry');
 })->name('entry');
 
-Route::get('/admin', function () {
-    return view('admin.panel');
-})->name('admin');
+Route::get('/admin', 'AdminController@getIndex')->name('admin');
+Route::get('/viewStudent', 'AdminController@getViewStudent')->name('viewSt');
+Route::get('/subject', 'AdminController@getSubject')->name('subject');
+Route::post('/addSubject', 'AdminController@storeSubject')->name('storeSu');
+Route::get('/addStudent', 'AdminController@getStudent')->name('addSt');
+Route::post('/addSt', 'AdminController@storeStudentInfo')->name('storeSt');
 
 Route::get('/student', function () {
     return view('admin.std');

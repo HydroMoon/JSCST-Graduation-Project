@@ -16,8 +16,9 @@ class CreateStdTable extends Migration
         //Some information is missing
         //We will look back into this file *important*
         Schema::create('student', function (Blueprint $table) {
-            $table->bigInteger('university_id');
-            $table->string('student_name', 150);
+            $table->integerIncrements('id');
+            $table->bigInteger('university_id')->unique()->nullable();
+            $table->string('student_name', 150);//index by name to minimize search time
             $table->string('phone_num', 15)->nullable();
             $table->string('gender', 10);
             $table->string('nationality', 50);

@@ -13,13 +13,28 @@ class CreateDegreeInfoTable extends Migration
      */
     public function up()
     {
-        //
+        //Will help degree_id table to get the info according to specific id
         Schema::create('degree_info', function (Blueprint $table) {
             $table->integerIncrements('degree_id');
-            $table->integer('semester_id');//Get Subject Info(Name etc..)
+            $table->tinyInteger('semester_id');//Get Subject Info(Name etc..)
             $table->integer('speciality_id');//Get student info(speciality_student_(Speciality_id)_(year))
             $table->integer('degree_year');//Year for the current degree/help to creat/retrive data from dynamic table
             $table->timestamps();
+        });
+
+        //FK
+        Schema::table('degree_info', function (Blueprint $table) {
+            $table->foreign('semester_id')
+            ->references('semester_id')
+            ->on('semester')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
+            $table->foreign('speciality_id')
+            ->references('speciality_id')
+            ->on('speciality')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 

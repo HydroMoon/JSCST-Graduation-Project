@@ -19,10 +19,24 @@ class CreateDegreeTable extends Migration
         //Table naming schema will be degree_(degree_info_id)
         Schema::create('degree', function (Blueprint $table) {
             $table->integerIncrements('id');
-            $table->integer('university_id');//will be inserted according to student speciality
+            $table->bigInteger('university_id');//will be inserted according to student speciality
             $table->integer('subject_id');//will be inserted according to the semester which the student study in
             $table->float('degree', 2, 2);
             $table->timestamps();
+        });
+
+        Schema::table('degree', function (Blueprint $table) {
+            $table->foreign('university_id')
+            ->references('university_id')
+            ->on('student')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
+            $table->foreign('subject_id')
+            ->references('subject_id')
+            ->on('subject')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
         });
     }
 

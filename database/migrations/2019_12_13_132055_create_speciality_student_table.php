@@ -24,6 +24,15 @@ class CreateSpecialityStudentTable extends Migration
             $table->boolean('transfer_active')->default(0);//According to this colmun we transfer the student to degree table
             $table->timestamps();
         });
+
+        //FK
+        Schema::table('speciality_student', function (Blueprint $table) {
+            $table->foreign('university_id')
+            ->references('university_id')
+            ->on('student')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+        });
     }
 
     /**
