@@ -1,5 +1,6 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,8 @@ Route::get('/entry', function () {
     return view('main.entry');
 })->name('entry');
 
+Route::get('/studentFee/{id}/{uni_id}', 'AdminController@getStudentFee')->name('viewFee');
+ROute::post('/storeFee', 'AdminController@storeStudentFee')->name('storeF');
 Route::get('/admin', 'AdminController@getIndex')->name('admin');
 Route::get('/viewStudent', 'AdminController@getViewStudent')->name('viewSt');
 Route::get('/subject', 'AdminController@getSubject')->name('subject');

@@ -35,6 +35,6 @@ class CreateStdTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('std');
+        Schema::dropIfExists('student');
     }
 }

@@ -14,20 +14,11 @@ class CreateSemesterTable extends Migration
     public function up()
     {
         Schema::create('semester', function (Blueprint $table) {
-            $table->tinyInteger('semester_id')->primary();
+            $table->tinyIncrements('semester_id');
             $table->string('semester_name', 20);
-            $table->integer('subject_id');
             $table->timestamps();
         });
 
-        //WE HAVE TO DO SOMETHING
-        // Schema::table('semester', function (Blueprint $table) {
-        //     $table->foreign('subject_id')
-        //     ->references('subject_id')
-        //     ->on('subject')
-        //     ->onDelete('cascade')
-        //     ->onUpdate('cascade');
-        // });
     }
 
     /**

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Subject extends Model
+class Semester extends Model
 {
-    protected $table = 'subject';
+    protected $table = 'semester';
 
     public function semsub()
     {

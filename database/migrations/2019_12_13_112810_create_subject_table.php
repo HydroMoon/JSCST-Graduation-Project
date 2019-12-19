@@ -14,10 +14,10 @@ class CreateSubjectTable extends Migration
     public function up()
     {
         Schema::create('subject', function (Blueprint $table) {
-            $table->integer('subject_id')->primary();
+            $table->integerIncrements('subject_id');
             $table->string('subject_name', 50);
             $table->tinyInteger('subject_hours');
-            $table->integer('speciality_id');//distingush every subject with specific speciality
+            $table->integer('speciality_id')->unsigned();//distingush every subject with specific speciality
             $table->timestamps();
         });
 

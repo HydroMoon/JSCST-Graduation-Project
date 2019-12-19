@@ -4,10 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Speciality extends Model
+class Semsub extends Model
 {
-    protected $table = 'speciality';
+    protected $table = 'semester_subject';
 
+    public function subjects()
+    {
+        return $this->hasMany('App\Subject', 'subject_id', 'subject_id');
+    }
 
     public function semesters()
     {

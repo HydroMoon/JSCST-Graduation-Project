@@ -21,7 +21,7 @@ class CreateDegreeTable extends Migration
             $table->integerIncrements('id');
             $table->bigInteger('university_id');//will be inserted according to student speciality
             $table->integer('subject_id');//will be inserted according to the semester which the student study in
-            $table->float('degree', 2, 2);
+            $table->float('degree', 3, 2);
             $table->timestamps();
         });
 

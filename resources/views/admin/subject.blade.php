@@ -13,10 +13,7 @@
                     <h3 class="text-center">Add Subject Information</h3>
                     <form action="{{ route('storeSu') }}" method="POST">
                         {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="">Subject ID:</label>
-                            <input name="subject_id" type="number" class="form-control">
-                        </div>
+
                         <div class="form-group">
                             <label for="">Subject Name:</label>
                             <input name="subject_name" type="text" class="form-control">
@@ -30,6 +27,14 @@
                             <select name="speciality_id" class="custom-select">
                                 @foreach ($speciality as $item)
                                     <option value="{{ $item['speciality_id'] }}">{{ $item['speciality_name'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Semester:</label>
+                            <select name="semester_id" class="custom-select">
+                                @foreach ($semester as $item)
+                                    <option value="{{ $item['semester_id'] }}">{{ $item['semester_name'] }}</option>
                                 @endforeach
                             </select>
                         </div>

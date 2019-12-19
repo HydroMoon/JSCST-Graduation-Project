@@ -45,6 +45,15 @@
                                 <label for="">Cert Source:</label>
                                 <input name="certificate_source" type="text" class="form-control">
                             </div>
+                            <hr>
+                            <div class="form-group">
+                                <label for="">Speciality:</label>
+                                <select name="speciality_id" class="custom-select">
+                                    @foreach ($speciality as $item)
+                                        <option value="{{ $item['speciality_id'] }}">{{ $item['speciality_name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success">Submit</button>
                             </div>

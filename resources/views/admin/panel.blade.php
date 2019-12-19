@@ -13,7 +13,7 @@
                     <div class="icon">
                         <i class="fa fa-user" aria-hidden="true"></i>
                     </div>
-                    <a class="small-box-footer btn white-text" href="#">Select</a>
+                    <a class="small-box-footer btn white-text" href="{{ route('viewSt') }}">Select</a>
                 </div>
             </div>
             <div class="col-sm-4">
@@ -37,7 +37,7 @@
                     <div class="icon">
                         <i class="fa fa-book" aria-hidden="true"></i>
                     </div>
-                    <a class="small-box-footer btn white-text" href="#">Select</a>
+                    <a class="small-box-footer btn white-text" href="{{ route('subject') }}">Select</a>
                 </div>
             </div>
         </div>
