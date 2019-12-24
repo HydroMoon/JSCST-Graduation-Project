@@ -17,11 +17,14 @@ class CreateSubjectTable extends Migration
             $table->integerIncrements('subject_id');
             $table->string('subject_name', 50);
             $table->tinyInteger('subject_hours');
+            //Will look further the road maybe delete
+            //We moved it into semester_subject table
             $table->integer('speciality_id')->unsigned();//distingush every subject with specific speciality
             $table->timestamps();
         });
 
         //FK
+        //Same thing as the above
         Schema::table('subject', function (Blueprint $table) {
             $table->foreign('speciality_id')
             ->references('speciality_id')

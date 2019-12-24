@@ -10,6 +10,11 @@ class Subject extends Model
 
     public function semsub()
     {
-        return $this->belongsTo('App\Semsub');
+        return $this->belongsToMany('App\Semsub', 'subject_id', 'subject_id');
+    }
+
+    public function specs()
+    {
+        return $this->belongsToMany('App\Speciality', 'speciality_id', 'speciality_id');
     }
 }

@@ -27,17 +27,17 @@ Route::get('/entry', function () {
 })->name('entry');
 
 Route::get('/studentFee/{id}/{uni_id}', 'AdminController@getStudentFee')->name('viewFee');
-ROute::post('/storeFee', 'AdminController@storeStudentFee')->name('storeF');
+Route::post('/storeFee', 'AdminController@storeStudentFee')->name('storeF');
 Route::get('/admin', 'AdminController@getIndex')->name('admin');
 Route::get('/viewStudent', 'AdminController@getViewStudent')->name('viewSt');
 Route::get('/subject', 'AdminController@getSubject')->name('subject');
 Route::post('/addSubject', 'AdminController@storeSubject')->name('storeSu');
 Route::get('/addStudent', 'AdminController@getStudent')->name('addSt');
 Route::post('/addSt', 'AdminController@storeStudentInfo')->name('storeSt');
+Route::get('/studentInfo', 'AdminController@getStudentInfo')->name('stdInfo');
+Route::get('/degreeEnter/{id}', 'AdminController@getDegreeEnter')->name('stdEnter');
+Route::post('/storeDeg', 'AdminController@storeDegreeEnter')->name('storeDeg');
 
-Route::get('/student', function () {
-    return view('admin.std');
-})->name('student');
 
 Auth::routes();
 

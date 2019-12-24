@@ -9,6 +9,7 @@
             <a class="nav-item nav-link {{ Request::is('result') ? "active" : "" }}" href="{{ route('result') }}">Result Enquiry</a>
             <a class="nav-item nav-link {{ Request::is('final') ? "active" : "" }}" href="{{ route('final') }}">Final Result</a>
             <a class="nav-item nav-link {{ Request::is('entry') ? "active" : "" }}" href="{{ route('entry') }}">Management</a>
+            <a class="nav-item nav-link {{ Request::is('admin') ? "active" : "" }}" href="{{ route('admin') }}">Admin Panel</a>
           </div>
         </div>
       </nav>

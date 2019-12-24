@@ -8,7 +8,7 @@ class Semsub extends Model
 {
     protected $table = 'semester_subject';
 
-    public function subjects()
+    public function subjs()
     {
         return $this->hasMany('App\Subject', 'subject_id', 'subject_id');
     }

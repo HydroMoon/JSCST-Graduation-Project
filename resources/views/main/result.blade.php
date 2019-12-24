@@ -17,16 +17,17 @@
                         <div class="form-group">
                             <label for="">Semester:</label>
                             <select class="custom-select" name="semester_id">
-                                <option selected value="">First</option>
-                                <option value="">Second</option>
+                                @foreach ($semester as $item)
+                                    <option value="{{ $item->semester_id }}">{{ $item->semester_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="">Year:</label>
                             <select class="custom-select" name="year">
-                                <option selected value="">2015</option>
-                                <option value="">2016</option>
-                                <option value="">2017</option>
+                                @for ($i = 2020; $i < 2031; $i++)
+                                    <option value="{{ ($i) }}">{{ ($i) }}</option>
+                                @endfor
                             </select>
                         </div>
                         <div class="form-group">

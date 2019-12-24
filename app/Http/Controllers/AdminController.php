@@ -13,13 +13,49 @@ use App\Speciality;
 use App\Subject;
 use App\Semester;
 use App\Semsub;
-use App\Dynamicspec;
+use App\Degreeinfo;
 
 class AdminController extends Controller
 {
     public function getIndex()
     {
         return view('admin.panel');
+    }
+
+    public function getStudentInfo()
+    {
+        $speciality = Speciality::all();
+
+        return view('admin.std')->with(['speciality' => $speciality]);
+    }
+
+    public function getDegreeEnter($id)
+    {
+        $tableName = 'speciality_student_' . $id . '_' . date('Y');
+
+        $spec_std = DB::table($tableName)
+            ->join('student', $tableName . '.university_id', '=', 'student.university_id')
+            ->get();
+        $spec = Speciality::where('speciality_id', $id)->get()[0];
+        $semsub = Semsub::where([
+            ['semester_id', 1],
+            ['speciality_id', $id]
+            ])->get();
+
+        $degreeinfo_id = Degreeinfo::where([
+            ['semester_id', 1],
+            ['speciality_id', $id]
+        ])->get()[0];
+
+        $studentDegree = null;
+        if (Schema::hasTable('degree_' . $degreeinfo_id->degree_id)) {
+
+            $studentDegree = DB::table('degree_' . $degreeinfo_id->degree_id)->get();
+        }
+
+        //dd($degreeinfo_id->degree_id);
+
+        return view('admin.enterDeg')->with(['spec' => $spec, 'student' => $spec_std, 'semsub' => $semsub, 'stdInfo' => $degreeinfo_id->degree_id, 'stddeg' => $studentDegree]);
     }
 
     public function getStudent()
@@ -105,6 +141,59 @@ class AdminController extends Controller
         return view('admin.viewStudent')->withStudent($student);
     }
 
+    public function storeDegreeEnter(Request $request)
+    {
+
+        $tableName = 'degree_' . $request->id;
+
+        $semsub = Semsub::where([
+                ['semester_id', 1],
+                ['speciality_id', 2]
+            ])->get();
+
+        if (!Schema::hasTable($tableName)) {
+        //Dynamic table will be name according to degree_info table PK_ID
+        //This table will be dynamically created
+        //Dynamic table will be created using information derived from this table
+        //Table naming schema will be degree_(degree_info_id)
+        Schema::create($tableName, function (Blueprint $table) use ($semsub) {
+            $table->integerIncrements('id');
+            $table->bigInteger('university_id');//will be inserted according to student speciality
+            //$table->integer('subject_id');//will be inserted according to the semester which the student study in
+            foreach ($semsub as  $item) {
+                $table->float(str_replace(' ', '', $item->subjs[0]->subject_name));
+            }
+            $table->float('total');
+            $table->timestamps();
+        });
+
+        Schema::table($tableName, function (Blueprint $table) {
+            $table->foreign('university_id')
+            ->references('university_id')
+            ->on('student')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+        });
+        }
+
+        $id = DB::table($tableName)->where('university_id', $request->deg[0]['university_id'])->get();
+
+        foreach ($request->deg as $key => $item) {
+
+            if (!$id == null) {
+                DB::table($tableName)->where('university_id', $request->deg[$key]['university_id'])
+                    ->update($item);
+            } else {
+                DB::table($tableName)
+                    ->insert($item);
+            }
+        }
+
+
+            
+        return redirect()->route('admin');
+    }
+
     public function storeStudentInfo(Request $request)
     {
         $this->validate($request, array(
@@ -132,7 +221,7 @@ class AdminController extends Controller
         $speciality_id = $request->speciality_id;
 
         if (!Schema::hasTable('speciality_student_' . $speciality_id . '_' . date('Y'))) {
-            //Speciality name will be for every year
+        //Speciality name will be for every year
         //Also will be created according to batch year
         //This table will be dynamically created at some point
         //mohand (table name  will speciality_student_(Speciality_id)_(year))
@@ -181,9 +270,17 @@ class AdminController extends Controller
         DB::table('semester_subject')->insert(
             array(
                 'semester_id' => $request->semester_id,
-                'subject_id' => $subject->id
+                'subject_id' => $subject->id,
+                'speciality_id' => $subject->speciality_id
             )
         );
+
+        $degreeInfo = new Degreeinfo;
+        $degreeInfo->semester_id = $request->semester_id;
+        $degreeInfo->speciality_id = $request->speciality_id;
+        $degreeInfo->degree_year = date('Y');
+        $degreeInfo->save();
+
 
         $request->session()->flash('success', 'Task was successful!');
 

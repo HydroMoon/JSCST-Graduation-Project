@@ -17,6 +17,7 @@ class CreateSemesterSubjectTabel extends Migration
             $table->tinyInteger('semester_id')->unsigned();
             $table->integer('subject_id')->unsigned();
             $table->primary(['semester_id', 'subject_id']);
+            $table->integer('speciality_id')->unsigned();
             $table->timestamps();
         });
 
@@ -33,7 +34,13 @@ class CreateSemesterSubjectTabel extends Migration
             ->on('subject')
             ->onDelete('cascade')
             ->onUpdate('cascade');
-        });
+            
+            $table->foreign('speciality_id')
+                ->references('speciality_id')
+                ->on('speciality')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            });
     }
 
     /**

@@ -9,9 +9,10 @@
                 <form action="#" method="post">
                     <div class="form-group">
                         <label for="">Speciality</label>
-                        <select class="custom-select" name="" id="">
-                            <option value="">Software Engineering</option>
-                            <option value="">Information Technology</option>
+                        <select class="custom-select" name="speciality_id">
+                            @foreach ($speciality as $item)
+                                <option value="{{ $item->speciality_id }}">{{ $item->speciality_name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
