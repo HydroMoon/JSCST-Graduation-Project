@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="text-center p-3">
                     <h6>الكلية الأردنية السودانية للعلوم والتكنولوجية</h6>
-                    <h5>{{ $spec->speciality_name }}</h5>
+                    <h5>بكالوريوس هندسة البرمجيات - المستوى الرابع 2019/2020</h5>
                     <span>الفصل الدراسي الثامن</span>
                     <hr>
                 </div>
@@ -18,33 +18,29 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    @foreach ($semsub as $item)
+                                    @foreach ($subject as $item)
                                         <th scope="col">{{ $item->subjs[0]->subject_name }} <br> ({{ $item->subjs[0]->subject_hours }} hours)</th>
                                     @endforeach
+                                    <th scope="col">Degree</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <form action="{{ route('storeDeg') }}" method="POST">
                                 @foreach ($student as $key => $item)
                                 <tr>
-                                    <th scope="row">{{ $key+1 }}</th>
-                                        <td>{{ $item->student_name }}</td>
-                                        <input type="hidden" name="deg[{{ $key }}][university_id]" value="{{ $item->university_id }}">
-                                        @foreach ($semsub as $item)
-                                            <td><input class="form-control" type="text" size="4" name="deg[{{ $key }}][{{ str_replace(' ', '', $item->subjs[0]->subject_name) }}]" value="{{ ($stddeg[$key]->{str_replace(' ', '', $item->subjs[0]->subject_name)}) ?? 0 }}"></td>
-                                        @endforeach
-
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>{{ $item->student_name }}</td>
+                                    @foreach ($subject as $keyy => $item)
+                                        <td>{{ ($degInfo[$key]->{str_replace(' ', '', $item->subjs[0]->subject_name)}) ?? 0 }}</td>
+                                        @php
+                                            $count =+ ($key + 1);
+                                            $total =+ $degInfo[$key]->{str_replace(' ', '', $item->subjs[0]->subject_name)};
+                                        @endphp
+                                    @endforeach
+                                    <td>{{ $count }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                            {{ csrf_field() }}
-                            <input type="hidden" name="spec_id" value="{{ $spec->speciality_id }}">
-                            <input type="hidden" name="sem_id" value="{{ $semsub[0]->semester_id }}">
-                            <div class="form-group">
-                                <button class="btn btn-secondary" type="submit">Submit</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

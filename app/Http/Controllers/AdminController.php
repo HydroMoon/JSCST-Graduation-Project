@@ -19,14 +19,44 @@ class AdminController extends Controller
 {
     public function getIndex()
     {
-        return view('admin.panel');
+        $speciality = Speciality::all();
+        $semester = Semester::all();
+
+        return view('admin.panel')->with(['speciality' => $speciality, 'semester' => $semester]);
     }
 
     public function getStudentInfo()
     {
         $speciality = Speciality::all();
+        $semester = Semester::all();
 
-        return view('admin.std')->with(['speciality' => $speciality]);
+        return view('admin.std')->with(['speciality' => $speciality, 'semester' => $semester]);
+    }
+
+    public function getDegreeInfo(Request $request)
+    {
+        $degreInfoId = Degreeinfo::where([
+            ['semester_id', $request->semester_id],
+            ['speciality_id', $request->speciality_id],
+            ['degree_year', 2019]
+        ])->get();
+
+        $tableName = 'speciality_student_' . $request->speciality_id . '_' . date('Y');
+
+        $spec_std = DB::table($tableName)
+            ->join('student', $tableName . '.university_id', '=', 'student.university_id')
+            ->get();
+
+        $semsub = Semsub::where([
+            ['semester_id', $request->semester_id],
+            ['speciality_id', $request->speciality_id]
+        ])->get();
+
+        $degreeInfo = DB::table('degree_' . $degreInfoId[0]->degree_id)
+            ->get();
+
+        $speciality = Speciality::find($request->speciality_id);
+        return view('admin.entry')->with(['student' => $spec_std, 'subject' => $semsub, 'degInfo' => $degreeInfo, 'spec' => $speciality]);
     }
 
     public function getDegreeEnter($id)
@@ -36,6 +66,7 @@ class AdminController extends Controller
         $spec_std = DB::table($tableName)
             ->join('student', $tableName . '.university_id', '=', 'student.university_id')
             ->get();
+
         $spec = Speciality::where('speciality_id', $id)->get()[0];
         $semsub = Semsub::where([
             ['semester_id', 1],
@@ -134,21 +165,32 @@ class AdminController extends Controller
         return redirect()->route('subject');
     }
 
-    public function getViewStudent()
+    public function getViewStudent(Request $request)
     {
-        $student = Student::all();
+        $tableName = 'speciality_student_' . $request->speciality_id . '_' . date('Y');
 
-        return view('admin.viewStudent')->withStudent($student);
+        $students = DB::table($tableName)
+            ->join('student', $tableName . '.university_id', '=', 'student.university_id')
+            ->get();
+
+        $speciality = Speciality::find($request->university_id);
+
+        return view('admin.viewStudent')->with(['student' => $students, 'spec_id' => $request->speciality_id, 'spec' => $speciality]);
     }
 
     public function storeDegreeEnter(Request $request)
     {
 
-        $tableName = 'degree_' . $request->id;
+        $degreeinfo_id = Degreeinfo::where([
+            ['semester_id', $request->sem_id],
+                ['speciality_id', $request->spec_id]
+        ])->get()[0];
+
+        $tableName = 'degree_' . $degreeinfo_id->degree_id;
 
         $semsub = Semsub::where([
-                ['semester_id', 1],
-                ['speciality_id', 2]
+                ['semester_id', $request->sem_id],
+                ['speciality_id', $request->spec_id]
             ])->get();
 
         if (!Schema::hasTable($tableName)) {
@@ -180,7 +222,7 @@ class AdminController extends Controller
 
         foreach ($request->deg as $key => $item) {
 
-            if (!$id == null) {
+            if ($id->count() > 0) {
                 DB::table($tableName)->where('university_id', $request->deg[$key]['university_id'])
                     ->update($item);
             } else {
@@ -189,8 +231,6 @@ class AdminController extends Controller
             }
         }
 
-
-            
         return redirect()->route('admin');
     }
 

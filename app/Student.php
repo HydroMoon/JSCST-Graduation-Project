@@ -10,7 +10,7 @@ class Student extends Model
 
     public function speciality()
     {
-        return $this->hasOne('App\Speciality');
+        return $this->hasOne('App\Speciality', 'speciality_id', 'speciality_id');
     }
 
 }

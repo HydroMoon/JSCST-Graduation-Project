@@ -17,19 +17,14 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/result', 'ResultEnquiryController@getIndex')->name('result');
+Route::post('/final', 'ResultEnquiryController@getDegreeResult')->name('final');
 
-Route::get('/final', function () {
-    return view('main.final');
-})->name('final');
-
-Route::get('/entry', function () {
-    return view('main.entry');
-})->name('entry');
+Route::post('/entry', 'AdminController@getDegreeInfo')->name('entry');
 
 Route::get('/studentFee/{id}/{uni_id}', 'AdminController@getStudentFee')->name('viewFee');
 Route::post('/storeFee', 'AdminController@storeStudentFee')->name('storeF');
 Route::get('/admin', 'AdminController@getIndex')->name('admin');
-Route::get('/viewStudent', 'AdminController@getViewStudent')->name('viewSt');
+Route::post('/viewStudent', 'AdminController@getViewStudent')->name('viewSt');
 Route::get('/subject', 'AdminController@getSubject')->name('subject');
 Route::post('/addSubject', 'AdminController@storeSubject')->name('storeSu');
 Route::get('/addStudent', 'AdminController@getStudent')->name('addSt');

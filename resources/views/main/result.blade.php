@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main')
-<div class="container">
+<div class="container Site-content">
     <div class="row">
         <div class="col-sm-6 mx-auto">
             <div class="card m-5">
@@ -9,7 +9,8 @@
                     <div class="card-title text-center">
                         <h5>Result Enquiry</h5>
                     </div>
-                    <form action="#" method="post">
+                    <form action="{{ route('final') }}" method="post">
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <label for="">Student ID:</label>
                             <input type="text" name="university_id" class="form-control">

@@ -40,3 +40,13 @@
 	background: rgba(0,0,0,0.1);
 	text-decoration: none;
 }
+
+.Site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+.Site-content {
+    flex: 1;
+  }

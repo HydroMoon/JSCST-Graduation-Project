@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('main')
-    <div class="container">
+    <div class="container Site-content">
         @if (Session::has('success'))
             <div class="alert alert-success mt-4" role="alert">
                 <strong>Success: </strong>{{ Session::get('success') }}

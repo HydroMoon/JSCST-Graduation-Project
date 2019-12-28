@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('main')
-<div class="container">
+<div class="container Site-content">
     <div class="row">
         <div class="col-sm-12 mx-auto m-5">
             <div class="card">
                 <div class="text-center p-3">
                     <h6>الكلية الأردنية السودانية للعلوم والتكنولوجية</h6>
                     <h5>كشف الطلاب</h5>
-                    <span>##-------------------------------##</span>
+                    <span>## {{ dd($spec) }} ##</span>
                     <hr>
                 </div>
                 <div class="card-body">
@@ -27,17 +27,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($student as $key=>$item)
+                                @foreach ($student as $key => $item)
                                     <tr>
-                                        <th scope="row">{{ $key+1 }}</th>
-                                        <td>{{ $item['university_id'] }}</td>
-                                        <td>{{ $item['student_name'] }}</td>
-                                        <td>{{ $item['phone_num'] }}</td>
-                                        <td>{{ $item['gender'] }}</td>
-                                        <td>{{ $item['nationality'] }}</td>
-                                        <td>{{ $item['certificate_type'] }}</td>
-                                        <td>{{ $item['certificate_source'] }}</td>
-                                        <td><a href="#" class="btn btn-outline-warning">Edit</a></td>
+                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <td>{{ $item->university_id }}</td>
+                                        <td>{{ $item->student_name }}</td>
+                                        <td>{{ $item->phone_num }}</td>
+                                        <td>{{ $item->gender }}</td>
+                                        <td>{{ $item->nationality }}</td>
+                                        <td>{{ $item->certificate_type }}</td>
+                                        <td>{{ $item->certificate_source }}</td>
+                                        <td><a href="{{ route('viewFee', [$spec_id, $item->university_id]) }}" class="btn btn-outline-warning">Edit</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
